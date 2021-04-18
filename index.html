@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- metaTags -->
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="author" content="Pericodes" />
+    <meta name="robots" content="index, follow"/>
+    <meta http-equiv="expires" content="86400"/>
+    
+	<title>Remove Duplicates</title>
+	<meta name="description" content="This is a online open source secure password generator. Check the code on GitGub"/>
+    <meta name="keywords" content="Password Generator, Secure Password Generator"/>
+    
+    <link rel="alternate" hreflang="x-default" href="" />
+
+    <!-- CSS only -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet" >
+    <!-- JavaScript Bundle with Popper.js -->
+
+    <script src="asserts/js/bootstrap.min.js" ></script>
+
+</head>
+
+<body class="container">
+	<main class="card">
+		<section class="card-body card" id="password-generated">
+            <h2>Password Generated</h2>
+            <textarea class="form-control" id="input" rows="10" onkeyup="removeDuplicates()" placeholder="Tap here the text that you want to remove duplicates"></textarea>
+            <div>
+                <div class="row d-flex align-items-center justify-content-around m-2">
+                    <div class="col-sm-4 m-4 d-flex justify-content-center">
+                        <button type="button" class="btn btn-warning size1" onclick="removeDuplicates()">Remove Duplicates</button>
+                    </div>
+                    <div class="col-sm-2 m-2 d-flex justify-content-center">
+                        <button type="button" class="btn btn-success size1" onclick="copyToClipboard()">Copy</button>
+                    </div>
+                </div>
+            </div>
+            <h2 class="btn btn-primary size2" data-toggle="collapse" data-target="#options" aria-expanded="false" aria-controls="options">Options</h2>
+            <section class="collapse" id="options">
+                <div class="form-group row">
+                    <label for="staticEmail" class="col-sm-3 col-form-label">Case Sentitive</label>
+                    <div class="col-sm-9">
+                    <input type="checkbox" class="form-control strength" id="lengthOptions" min="1" max="40" value="16" onchange="removeDuplicates()" value="Case Sentitive">
+                    </div>
+                </div>
+
+            </section>
+        </section>
+        <section class="card-body card" id="passwordStrength">
+            <textarea class="form-control" id="result" rows="10" placeholder="Here will appear the text without duplicates" readonly></textarea>
+        </section>
+	</main>
+	<footer class="card">
+		<section class="card-body" id="credits">
+			<h2>Credits: </h2>
+                   <p>Make with love by <a href="https://github.com/pericodes">Pericodes</a></p>
+		</section>
+	</footer>
+	<script>
+
+    function removeDuplicates(){
+        let input = document.getElementById('input').value.replace('/\n+/', '').split("\n");
+
+        console.log(input);
+
+        let unique = new Map(); 
+
+        for (let index = 0; index < input.length; index++) {
+            let element = input[index];
+            if (element != "" && !unique.has(element)) {
+                unique.set(
+                    input[index].toLowerCase()
+                    , input[index]);
+            }
+        }
+        
+        document.getElementById('result').value = [ ...unique.values() ].join("\n");; 
+    }
+
+        function copyToClipboard () {
+            const str = document.getElementById('password').value;
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+</script>
+</body>
+</html>
